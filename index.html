@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Attire & Styles</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin: 10px 0 5px;
+        }
+        input, select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .mensagem {
+            display: none;
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: #5cb85c;
+        }
+        .devolucao {
+            margin-top: 30px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+        .mensagem-devolucao {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Urban Attire & Styles</h1>
+        <form id="form-compra">
+            <label for="nome-item">Nome da Roupa:</label>
+            <input type="text" id="nome-item" name="nome-item" required>
+
+            <label for="categoria">Categoria:</label>
+            <select id="categoria" name="categoria" onchange="mostrarTamanhos()">
+                <option value="camiseta">Camiseta</option>
+                <option value="calça">Calça</option>
+                <option value="jaqueta">Jaqueta</option>
+                <option value="shorts">Shorts</option>
+                <option value="calçados">Calçados</option>
+                <option value="roupas-de-praia">Roupas de Praia</option>
+                <option value="acessórios">Acessórios</option>
+                <option value="ternos">Ternos</option>
+                <option value="gravatas">Gravatas</option>
+                <option value="cuecas">Cuecas</option>
+                <option value="vestidos">Vestidos</option>
+                <option value="saias">Saias</option>
+                <option value="baby-doll">Baby Doll</option>
+                <option value="roupas-criancas-bebes">Roupas para Crianças e Bebês</option>
+                <option value="chapeus">Chapéus</option>
+                <option value="bones">Bonés</option>
+            </select>
+
+            <label for="tamanho">Tamanho:</label>
+            <select id="tamanho" name="tamanho" required>
+                <option value="PP">PP</option>
+                <option value="P">P</option>
+                <option value="M">M</option>
+                <option value="G">G</option>
+                <option value="GG">GG</option>
+                <option value="34">34</option>
+                <option value="36">36</option>
+                <option value="38">38</option>
+                <option value="40">40</option>
+                <option value="42">42</option>
+                <option value="44">44</option>
+                <option value="46">46</option>
+                <option value="48">48</option>
+                <option value="50">50</option>
+                <option value="52">52</option>
+            </select>
+
+            <label for="marca">Marca:</label>
+            <select id="marca" name="marca">
+                <option value="gucci">Gucci</option>
+                <option value="renner">Renner</option>
+                <option value="lacoste">Lacoste</option>
+                <option value="nike">Nike</option>
+                <option value="olympikus">Olympikus</option>
+                <option value="colcci">Colcci</option>
+                <option value="adidas">Adidas</option>
+                <option value="calvin-klein">Calvin Klein</option>
+                <option value="fila">Fila</option>
+                <option value="puma">Puma</option>
+                <option value="vogue">Vogue</option>
+            </select>
+
+            <label for="valor">Valor (R$):</label>
+            <input type="number" id="valor" name="valor" step="0.01" required>
+
+            <label for="data-compra">Data da Compra:</label>
+            <input type="date" id="data-compra" name="data-compra" required>
+
+            <button type="submit">Registrar Compra</button>
+        </form>
+
+        <div id="mensagem" class="mensagem">
+            Compra registrada. Obrigado pela preferência e volte sempre!
+        </div>
+
+        <div class="devolucao">
+            <h2>Política de Devolução</h2>
+            <p>Você pode solicitar a devolução da sua compra dentro de 7 dias úteis após a compra.</p>
+            <p>Se a devolução for feita dentro deste período, você poderá optar por um reembolso ou troca do produto.</p>
+            <form id="form-devolucao" style="display: none;">
+                <label for="nome-devolucao">Nome do Produto:</label>
+                <input type="text" id="nome-devolucao" name="nome-devolucao" required>
+                <label for="data-devolucao">Data da Solicitação de Devolução:</label>
+                <input type="date" id="data-devolucao" name="data-devolucao" required>
+                <button type="submit">Solicitar Devolução</button>
+            </form>
+            <button id="botao-devolucao">Solicitar Devolução</button>
+            <div id="mensagem-devolucao" class="mensagem-devolucao"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('form-compra').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('mensagem').style.display = 'block';
+        });
+
+        document.getElementById('botao-devolucao').addEventListener('click', function() {
+            document.getElementById('form-devolucao').style.display = 'block';
+            document.getElementById('botao-devolucao').style.display = 'none';
+        });
+
+        document.getElementById('form-devolucao').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const dataCompra = new Date(document.getElementById('data-compra').value);
+            const dataDevolucao = new Date(document.getElementById('data-devolucao').value);
+            const diasUteis = 7; // Prazo de devolução em dias úteis
+
+            const tempoPassado = (dataDevolucao - dataCompra) / (1000 * 60 * 60 * 24); // Tempo passado em dias
+
+            if (tempoPassado <= diasUteis) {
+                document.getElementById('mensagem-devolucao').innerText = 'Solicitação de devolução enviada com sucesso!';
+                document.getElementById('mensagem-devolucao').style.color = '#5cb85c';
+            } else {
+                document.getElementById('mensagem-devolucao').innerText = 'O prazo da devolução foi excedido e não é possível fazer a devolução.';
+                document.getElementById('mensagem-devolucao').style.color = 'red';
+            }
+            document.getElementById('mensagem-devolucao').style.display = 'block';
+            document.getElementById('form-devolucao').reset();
+        });
+
+        function mostrarTamanhos() {
+            const categoria = document.getElementById('categoria').value;
+            const tamanhoSelect = document.getElementById('tamanho');
+
+            if (categoria === 'calçados') {
+                tamanhoSelect.innerHTML = `
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                `;
+            } else if (categoria === 'camiseta' || categoria === 'jaqueta' || categoria === 'vestidos') {
+                tamanhoSelect.innerHTML = `
+                    <option value="PP">PP</option>
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                    <option value="GG">GG</option>
+                `;
+            } else if (categoria === 'calça' || categoria === 'shorts') {
+                tamanhoSelect.innerHTML = `
+                    <option value="PP">PP</option>
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                    <option value="GG">GG</option>
+                    <option value="34">34</option>
+                    <option value="36">36</option>
+                    <option value="38">38</option>
+                    <option value="40">40</option>
+                    <option value="42">42</option>
+                    <option value="44">44</option>
+                    <option value="46">46</option>
+                    <option value="48">48</option>
+                    <option value="50">50</option>
+                    <option value="52">52</option>
+                `;
+            } else {
+                tamanhoSelect.innerHTML = `
+                    <option value="PP">PP</option>
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                    <option value="GG">GG</option>
+                    <option value="34">34</option>
+                    <option value="36">36</option>
+                    <option value="38">38</option>
+                    <option value="40">40</option>
+                    <option value="42">42</option>
+                    <option value="44">44</option>
+                    <option value="46">46</option>
+                    <option value="48">48</option>
+                    <option value="50">50</option>
+                    <option value="52">52</option>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
